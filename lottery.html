@@ -1,0 +1,222 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Lucky For Life</title>
+	<script language="javascript">
+
+		var lottoNum = [];
+		var luckyNum;
+		var userLottoNum = [];
+		var userLuckyNum;
+		var userInput;
+		var matchCount;
+		var luckyMatch;
+		var statement;
+
+
+		function numGenerator(minVal, maxVal)
+		{
+			range = maxVal - minVal;
+			num = parseInt(Math.random() * range + minVal);
+			return num;
+		}
+
+		function printNums(array)
+		{
+			for(i = 0; i < array.length; i++)
+			{
+				document.write(array[i] + " ");
+			}
+		}
+
+		function sortNums(array)
+		{
+			for (i = 0; i < 5; i++)
+			{
+				for (j = i + 1; j < 5; j++)
+				{
+					if (array[i] > array[j])
+					{
+						temp = array[i];
+						array[i] = array[j];
+						array[j] = temp;
+					}
+				}
+			}
+		}
+
+
+		function parseNums(string)
+		{
+			//TO DO
+			//userInput = document.getElementById("nums").value;
+			array = string.split(" ");
+			return array;
+		}
+
+		function compareFiveNum(array1, array2)
+		{
+			var numMatch = 0; 
+			for (i = 0; i < array1.length; i++)
+			{
+				for (j = 0; j < array2.length; j++)
+				{
+					if (array1[i] == array2[j])
+					{
+						numMatch++;
+						break;
+					}
+				}
+			}
+			return numMatch;
+		}
+
+		function compareLucky(lucky, input)
+		{
+			if(lucky == input)
+			{
+				return 1;
+			}
+			else
+			{
+				return 0;
+			}
+		}
+
+		function checkPreExist(array, num)
+		{
+			for (i = 0; i < array.length; i++)
+			{
+				if (array[i] == num)
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+
+		function compare(lottoNum, luckyNum)
+		{
+			userInput = document.userForm.nums.value;
+			userLottoNum = parseNums(userInput);
+
+			userLuckyNum = document.userForm.lucky.value;
+			// alert(userLuckyNum);
+
+			// counts number of matches between arrays
+			matchCount = compareFiveNum(lottoNum, userLottoNum);
+			// checks to see if lucky num is same
+			luckyMatch = compareLucky(luckyNum, userLuckyNum);
+
+			statement = winningCalc(matchCount, luckyMatch);
+
+			alert(statement);
+
+		}
+
+		function winningCalc(matchCount, luckyMatch)
+		{
+			if (matchCount == 5 && luckyMatch == 1)
+			{
+				statement = "You win $7,000 a WEEK for LIFE!";
+			}
+			else if (matchCount == 5 && luckyMatch == 0)
+			{
+				statement = "You win $25,000 a YEAR for LIFE!";
+			}
+			else if (matchCount == 4 && luckyMatch == 1)
+			{
+				statement = "You win $5,000";
+			}
+			else if (matchCount == 4 && luckyMatch == 0)
+			{
+				statement = "You win $200";
+			}
+			else if (matchCount == 3 && luckyMatch == 1)
+			{
+				statement = "You win $150";
+			}
+			else if (matchCount == 3 && luckyMatch == 0)
+			{
+				statement = "You win $20";
+			}
+			else if (matchCount == 2 && luckyMatch == 1)
+			{
+				statement = "You win $25";
+			}
+			else if (matchCount == 2 && luckyMatch == 0)
+			{
+				statement = "You win $3";
+			}
+			else if (matchCount == 1 && luckyMatch == 1)
+			{
+				statement = "You win $6";
+			}
+			else if (matchCount == 0 && luckyMatch == 1)
+			{
+				statement = "You win $4";
+			}
+			else
+			{
+				statement = "No winnings";
+			}
+
+			return statement;
+		}
+
+	</script>
+</head>
+
+<body>
+
+	<h1>Lucky For Life!</h1>
+
+	<script language="javascript">
+		
+		for (i = 0; i < 6; i++)
+		{
+			if (i < 5)
+			{
+				num = numGenerator(1, 48);
+				while(checkPreExist(lottoNum, num))
+				{
+					num = numGenerator(1, 48);
+				}
+				lottoNum.push(num);
+			}
+			else
+			{
+				luckyNum = numGenerator(1, 12);
+			}
+		}
+
+		//printing numbers
+		document.write("The five lottery numbers are: ");
+		printNums(lottoNum);
+		document.write("<br/> The lucky number is: " + luckyNum);
+
+
+		//sorting numbers
+		sortNums(lottoNum);
+
+		// printing again
+		document.write("<br/><br/>The sorted five lottery numbers are: ")
+		printNums(lottoNum);
+		document.write("<br/> The lucky number is: " + luckyNum);
+
+		
+	</script>
+	<br/> <br/>
+
+	<!--form-->
+	<form name="userForm" method="get" action="">
+		Enter Five Numbers &nbsp&nbsp <input type="text" name="nums" /><br />
+		Enter Lucky Number &nbsp <input type="text" name="lucky" /><br />
+		<input type="button" value="Test Your Luck!" onclick="compare(lottoNum, luckyNum)"> 
+		<button onClick="window.location.reload();">Try Again with New Lotto Numbers</button>
+	</form>
+
+
+</body>
+</html>

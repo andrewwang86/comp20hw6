@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Amicable Numbers</title>
+
+	<style type="text/css">
+			html,body,input
+			{
+				font-size:20px;
+			}
+	</style>
+
+	<script language="javascript">
+
+		function checkAmicable()
+		{
+			var statement;
+			firstArray = [];
+			secondArray = [];
+			firstSum = 0;
+			secondSum = 0;
+
+			firstNum = parseInt(document.userForm.num1.value);
+			secondNum = parseInt(document.userForm.num2.value);
+
+			firstArray = getFactors(firstNum);
+
+			secondArray = getFactors(secondNum);
+
+			firstSum = addFactors(firstArray);
+			secondSum = addFactors(secondArray);
+
+			if (firstNum == secondSum && secondNum == firstSum)
+			{
+				statement = "Amicable!";
+			}
+			else
+			{
+				statement = "Not amicable";
+			}
+
+			document.getElementById("result").value = statement;
+		}
+
+		function isFactor(num, test)
+		{
+			if (test % num == 0)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+
+		function showFactors(array)
+		{
+			for (i = 0; i < array.length; i++)
+			{
+				document.write(array[i] + " ");
+			}
+		}
+
+		function addFactors(array)
+		{
+			var sum = 0;
+			for (i = 0; i < array.length; i++)
+			{
+				sum = sum + array[i];
+			}
+			return sum;
+		}
+
+		function getFactors(num)
+		{
+			var factorList = [];
+			for (i = 0; i < num; i++)
+			{
+				if (num % i == 0)
+				{
+					factorList.push(i);
+				}
+			}
+			return factorList;
+		}
+
+	</script>
+</head>
+
+<body>
+
+	<h1>Amicable Numbers Calculator</h1>
+
+	<!-- test code for homework -->
+	<script language="javascript">
+		// if (isFactor(5, 48))
+		// {
+		// 	alert("5 is a factor of 48");
+		// }
+		// else
+		// {
+		// 	alert("5 is NOT a factor of 48");
+		// }
+
+		//array1 = [1, 2, 3, 4, 5];
+		// showFactors(array1);
+		//document.write(addFactors(array1));
+
+		// array2 = [];
+		// array2 = getFactors(72);
+		// showFactors(array2);
+
+	</script>
+
+	<form name="userForm">
+		Number 1 <input type="text" name="num1" id="num1"><br/>
+		Number 2 <input type="text" name="num2" id="num2"><br/><br/>
+		Result &nbsp &nbsp &nbsp <input type="text" name="result" id="result"><br/>
+
+		<br/><br/>
+		<input type="button" value="Calculate" onclick="checkAmicable()">
+	</form>
+</body>
+</html>
